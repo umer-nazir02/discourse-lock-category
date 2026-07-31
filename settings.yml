@@ -1,0 +1,21 @@
+locked_category_rules:
+  type: objects
+  default: []
+  schema:
+    name: locked_rule
+    identifier: button_text
+    properties:
+      button_text:
+        type: string
+        required: true
+      button_image:
+        type: string
+        required: false
+      redirect_url:
+        type: string
+        required: true
+      category_ids:
+        type: categories
+        required: true
+      allowed_groups:
+        type: groups

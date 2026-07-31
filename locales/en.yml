@@ -1,0 +1,20 @@
+en:
+  theme_metadata:
+    description: "Hide specified categories behind a call-to-action button on the categories page. Only users in designated groups can see the locked categories. Also intercepts direct navigation to locked category pages."
+    settings:
+      locked_category_rules:
+        description: "Configure rules to lock categories behind a button. Each rule specifies categories to hide, a button label, a redirect URL, and which groups can bypass the lock."
+        schema:
+          properties:
+            button_text:
+              label: "Button Text"
+              description: "The text displayed on the call-to-action button (e.g. 'Premium Only')."
+            redirect_url:
+              label: "Redirect URL"
+              description: "The URL users are redirected to when they click the button or try to access a locked category."
+            category_ids:
+              label: "Locked Categories"
+              description: "Select one or more categories to hide behind the button."
+            allowed_groups:
+              label: "Allowed Groups"
+              description: "Members of these groups can see the locked categories normally. Leave empty to lock for everyone."

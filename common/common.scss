@@ -1,0 +1,258 @@
+// ──────────────────────────────────────────────────────────────────────────────
+// Locked Categories — Blurred Row & Centered CTA Overlay Styles
+// ──────────────────────────────────────────────────────────────────────────────
+
+// Container relative positioning so absolute overlay centers directly over the category row
+tr[data-category-id].locked-category-container,
+.category-box.locked-category-container,
+.category-list-item.locked-category-container,
+.topic-list-item.locked-category-container,
+.latest-topic-list-item.locked-category-container,
+.category-topic-link.locked-category-container,
+tr.locked-category-container,
+td.locked-cell-relative,
+.locked-cell-relative {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+// Blur effect on the category row/card contents — lighter so the title and
+// description are still hinted at but unreadable, similar to topic rows.
+.locked-category-blurred-content {
+  filter: blur(1.5px) grayscale(15%);
+  opacity: 0.75;
+  pointer-events: none !important;
+  user-select: none !important;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+// Placeholder blur block shown for locked categories with no subcategories
+.locked-category-blur-placeholder {
+  position: relative;
+  min-height: 50px;
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+// Animated shimmer overlay that sits on top of blurred content to give the
+// impression that lines/text are hidden behind the lock.
+.locked-category-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none !important;
+  z-index: 50 !important;
+  background: linear-gradient(
+    105deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  background-size: 200% 100%;
+  animation: locked-category-shimmer-move 2.5s infinite linear;
+  mix-blend-mode: overlay;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+@keyframes locked-category-shimmer-move {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Placeholder subcategory items appended to keep the locked area at ~2 rows
+.locked-category-subcategory-placeholder {
+  display: inline-block;
+  width: 80px;
+  height: 18px;
+  margin: 4px 8px 4px 0;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+// Full-row overlay for locked topic rows so the whole row redirects.
+.locked-topic-row-overlay {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  pointer-events: auto !important;
+  cursor: pointer;
+
+  .locked-categories-cta-button {
+    pointer-events: auto !important;
+  }
+}
+
+// Centered overlay holding the CTA button over the category row
+.locked-category-overlay {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+// When the overlay sits inside a subcategory list or placeholder, it should
+// fill only that area rather than the whole category row.
+.subcategories .locked-category-overlay,
+.locked-category-blur-placeholder .locked-category-overlay {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// The CTA button itself — styled to match the hobbydb "Premium Only" look
+.locked-categories-cta-button {
+  filter: none !important;
+  -webkit-filter: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+
+  // Typography
+  font-size: 0.95em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  white-space: nowrap;
+
+  // Warm light yellow gold palette matching the screenshot
+  color: #8b6914 !important;
+  background: linear-gradient(
+    135deg,
+    #fdf6e3 0%,
+    #fceabb 50%,
+    #fdf6e3 100%
+  );
+  border: 1.5px solid #e6c85c;
+  border-radius: 6px;
+  padding: 8px 24px;
+
+  // Smooth transitions for hover effects
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(139, 105, 20, 0.18),
+              0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  img {
+    max-height: 28px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+  }
+
+  .cta-fallback-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  // Hover state — slight scale lift with enhanced shadow
+  &:hover {
+    color: #6b5010 !important;
+    background: linear-gradient(
+      135deg,
+      #fceabb 0%,
+      #f8d86a 50%,
+      #fceabb 100%
+    );
+    border-color: #d4b44a;
+    box-shadow: 0 4px 12px rgba(139, 105, 20, 0.25),
+                0 2px 4px rgba(0, 0, 0, 0.12);
+    transform: scale(1.03);
+  }
+
+  // Active / pressed state
+  &:active {
+    transform: scale(0.99);
+    box-shadow: 0 1px 2px rgba(139, 105, 20, 0.15);
+  }
+
+  // Focus state for accessibility
+  &:focus-visible {
+    outline: 2px solid #e6c85c;
+    outline-offset: 2px;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Dark Mode Support
+// ──────────────────────────────────────────────────────────────────────────────
+
+.dark-theme,
+html[data-color-scheme="dark"] {
+  .locked-category-overlay {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .locked-categories-cta-button {
+    color: #e6c85c !important;
+    background: linear-gradient(
+      135deg,
+      rgba(230, 200, 92, 0.18) 0%,
+      rgba(230, 200, 92, 0.12) 50%,
+      rgba(230, 200, 92, 0.18) 100%
+    );
+    border-color: rgba(230, 200, 92, 0.5);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      color: #f0d870 !important;
+      background: linear-gradient(
+        135deg,
+        rgba(230, 200, 92, 0.28) 0%,
+        rgba(230, 200, 92, 0.2) 50%,
+        rgba(230, 200, 92, 0.28) 100%
+      );
+      border-color: rgba(230, 200, 92, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Responsive adjustment for mobile devices
+// ──────────────────────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+  .locked-categories-cta-button {
+    font-size: 0.85em;
+    padding: 6px 18px;
+  }
+}
