@@ -175,7 +175,7 @@ export default apiInitializer("1.0", (api) => {
    */
   function createCTAButton(rule) {
     const targetUrl = normalizeUrl(rule.redirect_url);
-    const imageUrl = getUploadUrl(rule.button_image);
+    const imageUrl = getUploadUrl(rule.button_image) || normalizeUrl(rule.button_image_url);
 
     const button = document.createElement("a");
     button.className = "locked-categories-cta-button";
