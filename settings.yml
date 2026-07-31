@@ -9,7 +9,7 @@ locked_category_rules:
         type: string
         required: true
       button_image:
-        type: string
+        type: upload
         required: false
       redirect_url:
         type: string

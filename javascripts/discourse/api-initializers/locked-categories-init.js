@@ -152,11 +152,30 @@ export default apiInitializer("1.0", (api) => {
   }
 
   /**
-   * Build the CTA button for a locked category. Uses an image if configured,
-   * otherwise falls back to text. If the image fails to load, the text is shown.
+   * Extract a usable URL from a Discourse upload setting value, which may be
+   * delivered as a string, an object with a url property, or null/undefined.
+   */
+  function getUploadUrl(value) {
+    if (!value) {
+      return "";
+    }
+    if (typeof value === "string") {
+      return value.trim();
+    }
+    if (value.url) {
+      return value.url.trim();
+    }
+    return "";
+  }
+
+  /**
+   * Build the CTA button for a locked category. Uses an uploaded image if
+   * configured, otherwise falls back to text. If the image fails to load, the
+   * text is shown.
    */
   function createCTAButton(rule) {
     const targetUrl = normalizeUrl(rule.redirect_url);
+    const imageUrl = getUploadUrl(rule.button_image);
 
     const button = document.createElement("a");
     button.className = "locked-categories-cta-button";
@@ -169,9 +188,9 @@ export default apiInitializer("1.0", (api) => {
     fallbackText.className = "cta-fallback-text";
     fallbackText.textContent = rule.button_text || "";
 
-    if (rule.button_image) {
+    if (imageUrl) {
       const img = document.createElement("img");
-      img.src = rule.button_image.trim();
+      img.src = imageUrl;
       img.alt = rule.button_text || "";
 
       img.addEventListener("error", () => {
