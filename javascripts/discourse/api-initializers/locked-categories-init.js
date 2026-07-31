@@ -152,30 +152,13 @@ export default apiInitializer("1.0", (api) => {
   }
 
   /**
-   * Extract a usable URL from a Discourse upload setting value, which may be
-   * delivered as a string, an object with a url property, or null/undefined.
-   */
-  function getUploadUrl(value) {
-    if (!value) {
-      return "";
-    }
-    if (typeof value === "string") {
-      return value.trim();
-    }
-    if (value.url) {
-      return value.url.trim();
-    }
-    return "";
-  }
-
-  /**
-   * Build the CTA button for a locked category. Uses an uploaded image if
+   * Build the CTA button for a locked category. Uses an image URL if
    * configured, otherwise falls back to text. If the image fails to load, the
    * text is shown.
    */
   function createCTAButton(rule) {
     const targetUrl = normalizeUrl(rule.redirect_url);
-    const imageUrl = getUploadUrl(rule.button_image) || normalizeUrl(rule.button_image_url);
+    const imageUrl = normalizeUrl(rule.button_image_url);
 
     const button = document.createElement("a");
     button.className = "locked-categories-cta-button";

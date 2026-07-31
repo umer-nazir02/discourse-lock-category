@@ -8,9 +8,6 @@ locked_category_rules:
       button_text:
         type: string
         required: true
-      button_image:
-        type: upload
-        required: false
       button_image_url:
         type: string
         required: false
