@@ -6,9 +6,6 @@
 tr[data-category-id].locked-category-container,
 .category-box.locked-category-container,
 .category-list-item.locked-category-container,
-.topic-list-item.locked-category-container,
-.latest-topic-list-item.locked-category-container,
-.category-topic-link.locked-category-container,
 tr.locked-category-container,
 td.locked-cell-relative,
 .locked-cell-relative {
@@ -79,12 +76,23 @@ td.locked-cell-relative,
 }
 
 // Full-row overlay for locked topic rows so the whole row redirects.
+.topic-list-item.locked-category-container,
+.latest-topic-list-item.locked-category-container,
+.category-topic-link.locked-category-container,
+.topic-list-body tr.locked-category-container {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
 .locked-topic-row-overlay {
   position: absolute !important;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
+  min-height: 100%;
   z-index: 50 !important;
   background: rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(0.5px);
@@ -252,7 +260,21 @@ html[data-color-scheme="dark"] {
 
 @media (max-width: 768px) {
   .locked-categories-cta-button {
-    font-size: 0.85em;
-    padding: 6px 18px;
+    font-size: 0.8em;
+    padding: 5px 12px;
+
+    img {
+      max-height: 22px;
+    }
+  }
+
+  .locked-topic-row-overlay {
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding-right: 8px;
+
+    .locked-categories-cta-button {
+      margin-right: 0;
+    }
   }
 }
